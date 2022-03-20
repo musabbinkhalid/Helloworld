@@ -4,11 +4,11 @@ node('php') {
 
     stage('Get code from SCM') {
         checkout(
-                [$class: 'GitSCM', branches: [[name: '*/#your-dev-branch#']],
+                [$class: 'GitSCM', branches: [[name: '*/Master']],
                  doGenerateSubmoduleConfigurations: false,
                  extensions: [],
                  submoduleCfg: [],
-                 userRemoteConfigs: [[url: '#your-git-link#']]]
+                 userRemoteConfigs: [[url: 'https://github.com/musabbinkhalid/Helloworld']]]
         )
     }
 
