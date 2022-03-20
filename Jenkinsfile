@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-node('php') {
+node {
 
     stage('Get code from SCM') {
         checkout(
