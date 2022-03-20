@@ -5,8 +5,8 @@ pipeline {
             environment {
                 DB_HOST = "localhost"
                 DB_DATABASE = "laravel"
-                DB_USERNAME = "root"
-                DB_PASSWORD = ""
+                DB_USERNAME = "laravel"
+                DB_PASSWORD = "Admin123!@#"
             }
             steps {
                 sh 'php --version'
