@@ -29,7 +29,7 @@ pipeline {
         }
         stage ('push artifact') {
             steps {
-                sh 'mkdir archive'
+                sh 'mkdir -p archive'
                 sh 'echo test > archive/test.txt'
                 script{ zip zipFile: 'test.zip', archive: false, dir: '$workspace/*' }
                 archiveArtifacts artifacts: 'test.zip', fingerprint: true
