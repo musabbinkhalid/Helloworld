@@ -4,7 +4,7 @@ node {
 
     stage('Get code from SCM') {
         checkout(
-                [$class: 'GitSCM', branches: [[name: '*/Master']],
+                [$class: 'GitSCM', branches: [[name: '*/master']],
                  doGenerateSubmoduleConfigurations: false,
                  extensions: [],
                  submoduleCfg: [],
