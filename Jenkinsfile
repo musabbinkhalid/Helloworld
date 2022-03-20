@@ -28,12 +28,15 @@ pipeline {
             }
         }
         stage("PHPUnit") {
-        sh 'vendor/phpunit/phpunit/phpunit --bootstrap build/bootstrap.php --configuration phpunit-coverage.xml'
-        
-         }
+            steps{
+                sh 'vendor/phpunit/phpunit/phpunit --bootstrap build/bootstrap.php --configuration phpunit-coverage.xml'
+            }
+        }
         stage('Checkstyle Report') {
-        sh 'vendor/bin/phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml --standard=phpcs.xml --extensions=php,inc --ignore=autoload.php --ignore=vendor/ app || exit 0'
-        checkstyle pattern: 'build/logs/checkstyle.xml'
+            steps{
+                sh 'vendor/bin/phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml --standard=phpcs.xml --extensions=php,inc --ignore=autoload.php --ignore=vendor/ app || exit 0'
+                checkstyle pattern: 'build/logs/checkstyle.xml'
+            }
         }
     }
 }
