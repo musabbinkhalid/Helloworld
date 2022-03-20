@@ -27,15 +27,19 @@ pipeline {
                 sh 'php artisan test'
             }
         }
-        stage("PHPUnit") {
-            steps{
-                sh 'vendor/phpunit/phpunit/phpunit --bootstrap build/bootstrap.php --configuration phpunit-coverage.xml'
+        stage ('push artifact') {
+            steps {
+                sh 'mkdir archive'
+                sh 'echo test > archive/test.txt'
+                zip zipFile: 'test.zip', archive: false, dir: 'archive'
+                archiveArtifacts artifacts: 'test.zip', fingerprint: true
             }
         }
-        stage('Checkstyle Report') {
-            steps{
-                sh 'vendor/bin/phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml --standard=phpcs.xml --extensions=php,inc --ignore=autoload.php --ignore=vendor/ app || exit 0'
-                checkstyle pattern: 'build/logs/checkstyle.xml'
+        stage('pull artifact') {
+            steps {
+                copyArtifacts filter: 'test.zip', fingerprintArtifacts: true, projectName: '${JOB_NAME}', selector: specific('${BUILD_NUMBER}')
+                unzip zipFile: 'test.zip', dir: '/var/www/html'
+                sh 'cat archive_new/test.txt'
             }
         }
     }
